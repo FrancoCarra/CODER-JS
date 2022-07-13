@@ -53,3 +53,4 @@ do{
             alert("Operacion no valida")
         break
     }
+console.log(servicios.some((el) => el._precio >= 0))
