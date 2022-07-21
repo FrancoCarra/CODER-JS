@@ -1,56 +1,87 @@
-// programa para saber cuanto te llegara en servicios basicos al final de la cantidad de meses que elijas.
-class Servicio {
-    constructor(_nombre, _precio, _compañia) {
-        this._nombre = _nombre
-        this._precio = _precio
-        this._compañia = _compañia
-    }
-    aplicarDescuento(porcentajeDescuento) { 
-        this._precio -= (this._precio * porcentajeDescuento)
-    }
-    sumarMes(_cantidadMeses){
-        this._precio *= _cantidadMeses
-    }
+//creo los servicios
+let servicio = [
+    {
+        nombre: 'Lamparita S.R.L',
+        precio: 0,
+        servicio: 'Luz',
+        imagen: 'img/Luz comp.jpeg',
+},
+{
+    nombre: 'Aguas Turbias',
+    precio: 0,
+    servicio: 'agua',
+    imagen: 'img/Agua comp.jpeg',
+},
+{
+    nombre: 'Gases Naturales',
+    precio: 0,
+    servicio: 'Gas',
+    imagen: 'img/Gas comp.jpeg',
 }
-const servicio1 = new Servicio("Agua", parseFloat(prompt("inserte aqui cuanto le vino en su factura de agua: ")), "Aguitas")
-const servicio2 = new Servicio("Luz", parseFloat(prompt("inserte aqui cuanto le vino en su factura de luz: ")), "Lamparita S.R.L")
-const servicio3 = new Servicio("Gas", parseFloat(prompt("inserte aqui cuanto le vino en su factura de gas: ")), "Gasete" )
+]
+//agrego los servicios de manera interactiva al html
 
-const servicios = [servicio1, servicio2, servicio3]
-alert(`Atencion! acaba de recibir una sorpresa por parte de: ${servicios[1]._compañia}`)
+let Sv = document.getElementById('miServicio')
+    for (const x of servicio) {
+        Sv.innerHTML += `
+                    <div id="formServicio" class="card main-div col m-1" style="width: 18rem;">
+                        <img src="${x.imagen}" class="card-img-top" alt="#">
+                            <div class="card-body">
+                                <h5 id="nombreServicio" class="card-title">${x.nombre}</h5>
+                                <p class="card-text">${x.servicio}</p>
+                                <input type="number" class="form-control" id="precioServicio" name="precio">
+                                <button type="submit" id="botonServicio" class="boton"> Agregar al Carrito </button>
+                            </div>
+                    </div>
+    `
+}
+//guardo en local storage
 
-//el usuario se gano un descuento para su factura de luz :)
+if(localStorage.getItem('servicio')) {
+    tareas = JSON.parse(localStorage.getItem('servicio'))
+} else {
+    localStorage.setItem('servicio', JSON.stringify(servicio))
+}
 
-alert('Felicidades! Obtuvo un descuento del 30% para su factura de luz')
-servicio2.aplicarDescuento(0.3)
-alert(`su factura de luz quedaria en: ${servicio2._precio}`)
-servicios.push(TotalConDescuento = servicio2._precio)
-console.log(TotalConDescuento)
+const formServicio = document.getElementById("formServicio")
+const nombreServicio = document.getElementById("nombreServicio")
+const precioServicio = document.getElementById("precioServicio")
+const botonServicio = document.getElementById("botonServicio")
 
-do{
-    servicio1._precio
-    servicio2._precio
-    servicio3._precio
-   Meses = parseFloat(prompt('Ingrese la cantidad de meses que quiera pagar sus cuentas, hasta maximo 5: '))
-}while(this._precio >= 0)
-    switch(Meses){
-        case(1):
-            alert(`Su total de gastos en servicios en 1 mes es de: ${servicio1._precio + servicio2._precio + servicio3._precio}`)
-        break
-        case(2):
-            alert(`Su total de gastos en servicios en 2 meses es de: ${servicio1._precio + servicio2._precio + servicio3._precio * 2}`)
-        break
-        case(3):
-            alert(`Su total de gastos en servicios en 3 meses es de: ${servicio1._precio + servicio2._precio + servicio3._precio * 3}`)
-        break
-        case(4):
-            alert(`Su total de gastos en servicios en 4 meses es de: ${(servicio1._precio + servicio2._precio + servicio3._precio) * 4}`)
-        break
-        case(5):
-            alert(`Su total de gastos en servicios en 5 meses es de: ${(servicio1._precio + servicio2._precio + servicio3._precio) * 5}`)
-        break
-        default:
-            alert("Operacion no valida")
-        break
-    }
-console.log(servicios.some((el) => el._precio >= 0))
+//agregamos carrito, aca me hice un lio jaja
+
+function AgregarServicio(){
+    let x = {}
+    x.valor = document.querySelector("#precioServicio").value;
+    console.log(x.valor)
+}
+botonServicio.addEventListener('click', () => {
+    let arrayStorage = JSON.parse(localStorage.getItem('servicio'))
+    divServicios.innerHTML = ""
+    arrayStorage.forEach((servicio, indice) => {
+        divServicios.innerHTML += `
+        <div class="card border-dark mb-3" id="tarea${indice}" style="max-width: 20rem; margin:4px;">
+            <div class="card-header"><h2>${servicio.nombre}</h2></div>
+            <div class="card-text"><h3>${servicio.precio}</h3></div>
+            <div class="card-body">
+                <p class="card-title">${servicio.servicio}</p>
+                <button class="btn btn-danger">Eliminar Servicio</button>
+            </div>
+        </div>
+        `
+    });
+})
+
+const editButtons = document.querySelectorAll(".boton");
+editButtons.forEach(botonServicio => botonServicio.addEventListener('click',AgregarServicio, () => confirm));
+
+//Boton modo oscuro
+
+botonModoNoche.addEventListener("click", () => {
+    document.body.classList.add('darkMode')
+    localStorage.setItem('tema', "oscuro")  
+ })
+ botonModoDia.addEventListener('click', () => {
+     document.body.classList.remove('darkMode')
+     localStorage.setItem('tema', "claro")  
+ })
