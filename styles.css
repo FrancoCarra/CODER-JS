@@ -17,6 +17,11 @@ body {
 }
 
 /* Cards*/
+
+.card{
+    margin: 2rem;
+    width: 18rem;
+}
 .card-title{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: 800;
