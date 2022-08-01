@@ -46,12 +46,7 @@ tot = servicio.precio;
 
     function mostrarTot (servicio) {
         tot = servicio.precio;
-            if(isNaN(tot)){
-                console.log(tot)
-            }
-            else{
-                console.log(tot)
-            }
+        tot ? isNaN(tot) : console.log(tot)
         }
 
     function cambia() {
@@ -61,32 +56,11 @@ tot = servicio.precio;
               elegido = opciones[i].value
               }
            }
-       switch (elegido) {
-         case "1":
-            console.log(`Su total a pagar es: ${tot * opciones.value}$`)
-         break;
-         case "2":
-            console.log(`Su total a pagar es: ${tot * opciones.value}$`)
-         break; 
-         case "3":
-            console.log(`Su total a pagar es: ${tot * opciones.value}$`)
-         break;
-         case "4":
-            console.log(`Su total a pagar es: ${tot * opciones.value}$`)
-         break;
-         case "5":
-            console.log(`Su total a pagar es: ${tot * opciones.value}$`)
-         break;
-         case "6":
-            console.log(`Su total a pagar es: ${tot * opciones.value}$`)
-         break;
-         case "7":
-            console.log(`Su total a pagar es: ${tot * opciones.value}$`)
-         break;
-         default: 
-         alert('ingrese un valor valido');
-         break;
-         } 
+        const DEFAULT = 0
+        const RESULTADOS = {
+            1 : console.log(`Su total a pagar es: ${tot * opciones.value}$`), //quite el switch aplicando las condiciones de esta manera, implementando mejores practicas y optimizando el codigo!//
+        }
+        const TOTAL = RESULTADOS[elegido] || DEFAULT
        }
 
 //Boton modo oscuro
